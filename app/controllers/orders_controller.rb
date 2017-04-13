@@ -9,6 +9,7 @@ class OrdersController < ApplicationController
     order  = create_order(charge)
 
     if order.valid?
+      UserMailer.new_order(order.id)
       empty_cart!
       redirect_to order, notice: 'Your Order has been placed.'
     else
