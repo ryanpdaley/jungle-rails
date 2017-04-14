@@ -1,4 +1,6 @@
 class Admin::CategoriesController < ApplicationController
+  http_basic_authenticate_with :name => "Jungle", :password => "book"
+
   def index
     @category = Category.order(id: :desc).all
   end
@@ -18,8 +20,9 @@ class Admin::CategoriesController < ApplicationController
   end
 
   def destroy
-    @category = Category.find params[:id]
-    @category.destroy
+    if (Category.find params[:id])
+      Category.delete params[:id]
+    end
     redirect_to [:admin, :categories], notice: 'Category deleted!'
   end
 
