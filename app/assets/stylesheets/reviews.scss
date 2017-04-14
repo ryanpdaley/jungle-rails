@@ -1,0 +1,33 @@
+.reviews_box {
+  border-style: solid;
+  border-color: lightgrey;
+  border-radius: 5px;
+  border-width: 1px;
+  margin: 5px 0;
+  display: block;
+}
+.review_header {
+      border-bottom: solid lightgrey;
+}
+.review_user {
+  display: inline-block;
+  float: left;
+  font-style: italic;
+}
+
+.review_stars {
+  display: inline-block;
+  float: right;
+}
+
+.review_body
+{
+  display: block;
+}
+
+.review {
+  border-style: solid;
+  border-radius: 7px;
+  border-color: lightgrey;
+  padding: 5px;
+}

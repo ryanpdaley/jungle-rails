@@ -1,5 +1,9 @@
 <section class="products-show">
-
+  <% if !current_user %>
+  <% user = 0 %>
+  <% else %>
+  <% user = current_user.id %>
+  <% end %>
   <header class="page-header">
     <h1><%= link_to @product.category.name, @product.category %> &raquo; <%= @product.name %></h1>
   </header>
@@ -22,6 +26,59 @@
           <dd><%= @product.quantity %></dd>
           <dt>Price</dt>
           <dd><%= @product.price %></dd>
+          <dt>Reviews</dt>
+          <dd>
+            <% if @product.reviews.count != 0 %>
+              <% @product.reviews.order(created_at: :asc).each  do |r| %>
+                <section class="col-sm-8 reviews_box">
+                  <div class="row">
+                    <div class="col-sm-12 review_header">
+                      <div class="review_user">
+                        <%= User.find(r.user_id).first_name %>
+                        <% if user == r.user_id %>
+                          <%= link_to fa_icon('trash'), [@product, r], class: 'btn btn-sm', method: :delete, data: { confirm: "Are you sure?" } %>
+                        <% end %>
+                      </div>
+                      <div class="review_stars">
+                        Rating: <%= r.rating %>/5
+                      </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="col-sm-10 col-sm-offset-1">
+                          <%= r.description %>
+                        </div>
+                        <div class="col-sm-10 col-sm-offset-1 review_user">
+                          <%= r.created_at.in_time_zone("Eastern Time (US & Canada)").strftime("%A %b %-d %Y @ %r") %>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+              <% end %>
+            <% else %>
+              No Reviews yet!
+            <% end %>
+          </dd>
+          <dt></dt>
+          <dd>
+          <h2>Add a new review:</h2>
+          <div class="review form-group">
+            <%= form_for [@product, @review] do |f| %>
+              <%= f.hidden_field :product_id, :value => @product.id %>
+              <%= f.hidden_field :user_id, :value => user %>
+              <div>
+                <%= f.label :rating, 'Rating (out of 5): '%>
+                <%= f.select :rating, (1..5), class: 'form-control'%>
+              </div>
+              <div>
+                <%= f.label :description, 'Comments:'%>
+                <%= f.text_area :description, class: 'form-control' %>
+              </div>
+              <div>
+                <%= f.submit 'Create Review', class: 'btn btn-primary' %>
+              </div>
+            <% end %>
+            </div>
+        </dd>
         </dl>
       </div>
     </div>
