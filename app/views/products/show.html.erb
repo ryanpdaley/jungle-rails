@@ -40,7 +40,14 @@
                         <% end %>
                       </div>
                       <div class="review_stars">
-                        Rating: <%= r.rating %>/5
+                        <% for i in 0..4 %>
+                          <% if r.rating > i %>
+                            <i class="fa fa-star"></i>
+                          <% else %>
+                            <i class="fa fa-star-o"></i>
+                          <% end %>
+                        <% end %>
+
                       </div>
                     </div>
                     <div class="col-sm-12">
