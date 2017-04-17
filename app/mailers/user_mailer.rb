@@ -3,8 +3,7 @@ class UserMailer < ApplicationMailer
 
   def new_order(order_id)
     @order = Order.find(order_id)
-
-    # mail to: @order.email
-    mail to: 'rpdaley@gmail.com'
+    @mail_subject = "Jungle Order Confirmation ##{@order.id}"
+    mail(to: @order.email, subject: @mail_subject)
   end
 end
