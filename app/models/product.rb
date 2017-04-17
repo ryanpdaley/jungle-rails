@@ -11,6 +11,10 @@ class Product < ActiveRecord::Base
   validates :quantity, presence: true
   validates :category, presence: true
 
+  def describe
+    "#{name} #{price_cents} #{quantity} #{category.name}"
+  end
+
 end
 
 # create_table "products", force: :cascade do |t|
