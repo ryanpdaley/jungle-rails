@@ -137,7 +137,49 @@ RSpec.describe User, type: :model do
 
   end
 
-  # describe '.authenticate_with_credentials' do
+  describe '.authenticate_with_credentials' do
+    it "Valid email and password" do
+      @randomUser = User.create(
+        first_name: 'firstName',
+        last_name: 'lastName',
+        email: 'some@email.com',
+        password: 'password',
+        password_confirmation: 'password'
+        )
+      expect(User.authenticate_with_credentials('some@email.com', 'password')).to eq(@randomUser)
+    end
 
-  # end
+    it "valid email and invalid password" do
+      @randomUser = User.create(
+        first_name: 'firstName',
+        last_name: 'lastName',
+        email: 'some@email.com',
+        password: 'password',
+        password_confirmation: 'password'
+        )
+      expect(User.authenticate_with_credentials('some@email.com', 'notpassword')).to eq(nil)
+    end
+
+    it "leading spaces in email" do
+      @randomUser = User.create(
+        first_name: 'firstName',
+        last_name: 'lastName',
+        email: 'some@email.com',
+        password: 'password',
+        password_confirmation: 'password'
+        )
+      expect(User.authenticate_with_credentials('           some@email.com', 'password')).to eq(@randomUser)
+    end
+
+    it "incorrect case in email" do
+      @randomUser = User.create(
+        first_name: 'firstName',
+        last_name: 'lastName',
+        email: 'some@email.com',
+        password: 'password',
+        password_confirmation: 'password'
+        )
+      expect(User.authenticate_with_credentials('Some@Email.com', 'password')).to eq(@randomUser)
+    end
+  end
 end
