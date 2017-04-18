@@ -22,7 +22,7 @@ RSpec.feature "ProductDetails", type: :feature, js: true do
     click_on 'Details'
 
     # DEBUG
-    save_and_open_screenshot
+    save_screenshot
 
     # VERIFY
     expect(page).to have_css 'article.product-detail', count: 1
